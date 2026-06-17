@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Shippori Mincho';
+  src: local('Shippori Mincho');
+}
+
+:root {
+  /* --- Paleta: papel washi + tinta sumi + sello inkan --- */
+  --washi: #faf6ee;
+  --washi-deep: #f1eadb;
+  --sumi: #1c1a17;
+  --sumi-soft: #534c43;
+  --inkan: #a8362a;
+  --inkan-soft: #c75c4f;
+  --ai: #2f4858;
+  --moss: #5b6b47;
+  --line: #d9d2c0;
+  --line-strong: #c2b8a0;
+
+  font-family: 'Inter', system-ui, sans-serif;
+  color-scheme: light;
+  background: var(--washi);
+  color: var(--sumi);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+html, body, #root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background-image:
+    radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 0);
+  background-size: 28px 28px;
+  background-attachment: fixed;
+}
+
+.font-display {
+  font-family: 'Shippori Mincho', 'Noto Serif JP', serif;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* Trazo de pincel que se "dibuja" bajo el carácter activo */
+.brush-stroke {
+  stroke-dasharray: 240;
+  stroke-dashoffset: 240;
+  animation: draw-stroke 0.7s ease-out forwards;
+}
+
+@keyframes draw-stroke {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Sello que aparece al acertar */
+@keyframes stamp-in {
+  0% {
+    opacity: 0;
+    transform: scale(1.4) rotate(-8deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.92) rotate(-8deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(-8deg);
+  }
+}
+
+.stamp-in {
+  animation: stamp-in 0.35s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes shake-x {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.shake {
+  animation: shake-x 0.32s ease-in-out;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fade-up 0.4s ease-out forwards;
+}
+
+/* Foco accesible visible, coherente con la paleta */
+:focus-visible {
+  outline: 2px solid var(--inkan);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
