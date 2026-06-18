@@ -1,0 +1,20 @@
+{
+  "name": "Kata Me.",
+  "short_name": "Kata Me.",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "theme_color": "#f3e7d3",
+  "background_color": "#f3e7d3",
+  "display": "standalone",
+  "start_url": "/"
+}

@@ -5,6 +5,7 @@ interface QuizHeaderProps {
   isTestMode: boolean;
   onToggleTestMode: (testMode: boolean) => void;
   onBack: () => void;
+  hideTestToggle?: boolean;
 }
 
 export function QuizHeader({
@@ -14,6 +15,7 @@ export function QuizHeader({
   isTestMode,
   onToggleTestMode,
   onBack,
+  hideTestToggle = false,
 }: QuizHeaderProps) {
   return (
     <div className="flex flex-col items-center gap-4 mb-8">
@@ -35,39 +37,41 @@ export function QuizHeader({
         </p>
       </div>
 
-      <div
-        className="inline-flex rounded-full p-1 font-mono text-xs"
-        style={{ background: 'var(--washi-deep)', border: '1px solid var(--line)' }}
-        role="tablist"
-        aria-label="Modo de práctica"
-      >
-        <button
-          role="tab"
-          aria-selected={!isTestMode}
-          onClick={() => onToggleTestMode(false)}
-          className="px-4 py-1.5 rounded-full transition-colors"
-          style={{
-            background: !isTestMode ? '#fff' : 'transparent',
-            color: !isTestMode ? accentVar : 'var(--sumi-soft)',
-            boxShadow: !isTestMode ? '0 1px 3px rgba(28,26,23,0.1)' : 'none',
-          }}
+      {!hideTestToggle && (
+        <div
+          className="inline-flex rounded-full p-1 font-mono text-xs"
+          style={{ background: 'var(--washi-deep)', border: '1px solid var(--line)' }}
+          role="tablist"
+          aria-label="Modo de práctica"
         >
-          Práctica libre
-        </button>
-        <button
-          role="tab"
-          aria-selected={isTestMode}
-          onClick={() => onToggleTestMode(true)}
-          className="px-4 py-1.5 rounded-full transition-colors"
-          style={{
-            background: isTestMode ? '#fff' : 'transparent',
-            color: isTestMode ? accentVar : 'var(--sumi-soft)',
-            boxShadow: isTestMode ? '0 1px 3px rgba(28,26,23,0.1)' : 'none',
-          }}
-        >
-          Modo test
-        </button>
-      </div>
+          <button
+            role="tab"
+            aria-selected={!isTestMode}
+            onClick={() => onToggleTestMode(false)}
+            className="px-4 py-1.5 rounded-full transition-colors"
+            style={{
+              background: !isTestMode ? '#fff' : 'transparent',
+              color: !isTestMode ? accentVar : 'var(--sumi-soft)',
+              boxShadow: !isTestMode ? '0 1px 3px rgba(28,26,23,0.1)' : 'none',
+            }}
+          >
+            Práctica libre
+          </button>
+          <button
+            role="tab"
+            aria-selected={isTestMode}
+            onClick={() => onToggleTestMode(true)}
+            className="px-4 py-1.5 rounded-full transition-colors"
+            style={{
+              background: isTestMode ? '#fff' : 'transparent',
+              color: isTestMode ? accentVar : 'var(--sumi-soft)',
+              boxShadow: isTestMode ? '0 1px 3px rgba(28,26,23,0.1)' : 'none',
+            }}
+          >
+            Modo test
+          </button>
+        </div>
+      )}
     </div>
   );
 }

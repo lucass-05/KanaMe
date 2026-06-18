@@ -1,14 +1,17 @@
-import type { QuizMode } from '../types';
+import type { QuizPageMode } from './QuizPage';
 import { ModeCard } from '../components/ModeCard';
 import hiragana from '../data/hiragana.json';
 import katakana from '../data/katakana.json';
 import kanji from '../data/kanji.json';
 
 interface HomePageProps {
-  onSelectMode: (mode: QuizMode) => void;
+  onSelectMode: (mode: QuizPageMode) => void;
+  reviewCount: number;
 }
 
-export function HomePage({ onSelectMode }: HomePageProps) {
+export function HomePage({ onSelectMode, reviewCount }: HomePageProps) {
+  const hasMistakes = reviewCount > 0;
+
   return (
     <div className="w-full max-w-3xl mx-auto text-center">
       <p className="font-mono text-xs tracking-[0.2em] uppercase" style={{ color: 'var(--inkan)' }}>
@@ -47,6 +50,26 @@ export function HomePage({ onSelectMode }: HomePageProps) {
           count={kanji.length}
           onSelect={() => onSelectMode('kanji')}
         />
+      </div>
+
+      <div className="mt-8 flex justify-center">
+        <button
+          onClick={() => hasMistakes && onSelectMode('review')}
+          disabled={!hasMistakes}
+          className="inline-flex items-center gap-3 rounded-full px-5 py-2.5 font-mono text-sm transition-opacity disabled:cursor-default disabled:opacity-50 hover:opacity-80"
+          style={{
+            border: '1px solid var(--line-strong)',
+            color: 'var(--sumi)',
+            background: '#fff',
+          }}
+        >
+          <span aria-hidden="true" style={{ color: 'var(--inkan)' }}>
+            復
+          </span>
+          {hasMistakes
+            ? `Repasar fallos (${reviewCount})`
+            : 'Sin fallos pendientes de repasar'}
+        </button>
       </div>
     </div>
   );

@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import type { KanaEntry, KanjiEntry, QuizMode } from '../types';
+import type { KanaEntry, KanjiEntry, QuizMode, SourcedEntry } from '../types';
 import { useQuizSession } from '../hooks/useQuizSession';
 import { QuizHeader } from '../components/QuizHeader';
 import { QuizCard } from '../components/QuizCard';
 import { ProgressBar } from '../components/ProgressBar';
 import { StatsBar } from '../components/StatsBar';
 import { TestResults } from '../components/TestResults';
+
+export type QuizPageMode = QuizMode | 'review';
 
 interface ModeConfig {
   title: string;
@@ -14,7 +16,7 @@ interface ModeConfig {
   placeholder: string;
 }
 
-const MODE_CONFIG: Record<QuizMode, ModeConfig> = {
+const MODE_CONFIG: Record<QuizPageMode, ModeConfig> = {
   hiragana: {
     title: 'ひらがな',
     subtitle: 'Escribe la lectura en romaji',
@@ -33,11 +35,17 @@ const MODE_CONFIG: Record<QuizMode, ModeConfig> = {
     accentVar: 'var(--moss)',
     placeholder: 'lectura o significado',
   },
+  review: {
+    title: '復習 — Repaso',
+    subtitle: 'Recorre una vez tus caracteres con más fallos',
+    accentVar: 'var(--inkan)',
+    placeholder: 'romaji, lectura o significado',
+  },
 };
 
 interface QuizPageProps {
-  mode: QuizMode;
-  pool: (KanaEntry | KanjiEntry)[];
+  mode: QuizPageMode;
+  pool: SourcedEntry[];
   onBack: () => void;
 }
 
@@ -47,26 +55,32 @@ function getPromptChar(entry: KanaEntry | KanjiEntry): string {
 
 export function QuizPage({ mode, pool, onBack }: QuizPageProps) {
   const config = MODE_CONFIG[mode];
-  const [isTestMode, setIsTestMode] = useState(false);
+  const isReview = mode === 'review';
 
-  const session = useQuizSession({ pool, isTestMode });
+  // El repaso siempre funciona como un recorrido único (como el modo test):
+  // tiene principio y fin, y al acertar el carácter sale del almacén de fallos.
+  const [isTestMode, setIsTestMode] = useState(isReview);
+  const effectiveTestMode = isReview ? true : isTestMode;
+
+  const session = useQuizSession({ pool, isTestMode: effectiveTestMode });
 
   // Reinicia la sesión limpiamente cada vez que se cambia de modo libre <-> test
   useEffect(() => {
     session.restart();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isTestMode]);
+  }, [effectiveTestMode]);
 
-  if (isTestMode && session.isFinished) {
+  if (effectiveTestMode && session.isFinished) {
     return (
       <div className="w-full max-w-md mx-auto">
         <QuizHeader
           title={config.title}
           subtitle={config.subtitle}
           accentVar={config.accentVar}
-          isTestMode={isTestMode}
+          isTestMode={effectiveTestMode}
           onToggleTestMode={setIsTestMode}
           onBack={onBack}
+          hideTestToggle={isReview}
         />
         <TestResults
           results={session.testResults}
@@ -84,13 +98,14 @@ export function QuizPage({ mode, pool, onBack }: QuizPageProps) {
         title={config.title}
         subtitle={config.subtitle}
         accentVar={config.accentVar}
-        isTestMode={isTestMode}
+        isTestMode={effectiveTestMode}
         onToggleTestMode={setIsTestMode}
         onBack={onBack}
+        hideTestToggle={isReview}
       />
 
       <div className="mb-6">
-        {isTestMode && session.progress ? (
+        {effectiveTestMode && session.progress ? (
           <ProgressBar current={session.progress.current} total={session.progress.total} />
         ) : (
           <StatsBar correct={session.correctCount} wrong={session.wrongCount} />
@@ -108,11 +123,13 @@ export function QuizPage({ mode, pool, onBack }: QuizPageProps) {
         />
       ) : (
         <p className="text-center" style={{ color: 'var(--sumi-soft)' }}>
-          No hay datos disponibles para este modo.
+          {isReview
+            ? 'No tienes caracteres pendientes de repaso. ¡Buen trabajo!'
+            : 'No hay datos disponibles para este modo.'}
         </p>
       )}
 
-      {!isTestMode && (
+      {!effectiveTestMode && (
         <button
           onClick={session.restart}
           className="mt-6 mx-auto block font-mono text-xs transition-opacity hover:opacity-70"
