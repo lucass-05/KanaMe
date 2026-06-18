@@ -1,11 +1,11 @@
-import type { QuizPageMode } from './QuizPage';
+import type { AppView } from '../types';
 import { ModeCard } from '../components/ModeCard';
 import hiragana from '../data/hiragana.json';
 import katakana from '../data/katakana.json';
 import kanji from '../data/kanji.json';
 
 interface HomePageProps {
-  onSelectMode: (mode: QuizPageMode) => void;
+  onSelectMode: (mode: AppView) => void;
   reviewCount: number;
 }
 
@@ -21,11 +21,11 @@ export function HomePage({ onSelectMode, reviewCount }: HomePageProps) {
         Quiz de japonés
       </h1>
       <p className="mt-3 max-w-md mx-auto" style={{ color: 'var(--sumi-soft)' }}>
-        Elige qué quieres practicar. Cada modo tiene su propia práctica libre y un modo test con
-        nota final.
+        Elige qué quieres practicar. La mayoría de modos tienen práctica libre y un modo test
+        con nota final.
       </p>
 
-      <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6">
+      <div className="mt-12 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-6">
         <ModeCard
           sampleChar="あ"
           label="Hiragana"
@@ -49,6 +49,14 @@ export function HomePage({ onSelectMode, reviewCount }: HomePageProps) {
           accentVar="var(--moss)"
           count={kanji.length}
           onSelect={() => onSelectMode('kanji')}
+        />
+        <ModeCard
+          sampleChar="花"
+          label="Kanji · Elige"
+          description="Escoge el kanji según su traducción"
+          accentVar="var(--moss)"
+          count={kanji.length}
+          onSelect={() => onSelectMode('kanjiChoice')}
         />
       </div>
 

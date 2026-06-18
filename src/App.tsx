@@ -1,12 +1,14 @@
 import { useMemo, useState } from 'react';
-import type { QuizMode } from './types';
+import type { AppView, QuizMode } from './types';
 import { HomePage } from './pages/HomePage';
 import { QuizPage } from './pages/QuizPage';
-import type { QuizPageMode } from './pages/QuizPage';
+import { KanjiChoicePage } from './pages/KanjiChoicePage.tsx';
 import { withSourceMode, buildReviewPool } from './utils/buildPools';
 import hiragana from './data/hiragana.json';
 import katakana from './data/katakana.json';
 import kanji from './data/kanji.json';
+
+export type { AppView };
 
 const DATASETS: Record<QuizMode, typeof hiragana | typeof kanji> = {
   hiragana,
@@ -15,7 +17,7 @@ const DATASETS: Record<QuizMode, typeof hiragana | typeof kanji> = {
 };
 
 export default function App() {
-  const [activeMode, setActiveMode] = useState<QuizPageMode | null>(null);
+  const [activeMode, setActiveMode] = useState<AppView | null>(null);
 
   const hiraganaPool = useMemo(() => withSourceMode(hiragana, 'hiragana'), []);
   const katakanaPool = useMemo(() => withSourceMode(katakana, 'katakana'), []);
@@ -39,6 +41,8 @@ export default function App() {
         return <QuizPage mode="kanji" pool={kanjiPool} onBack={() => setActiveMode(null)} />;
       case 'review':
         return <QuizPage mode="review" pool={reviewPool} onBack={() => setActiveMode(null)} />;
+      case 'kanjiChoice':
+        return <KanjiChoicePage dataset={kanji} onBack={() => setActiveMode(null)} />;
       default:
         return (
           <HomePage

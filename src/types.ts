@@ -38,3 +38,17 @@ export interface MistakeRecord {
   timesWrong: number;
   lastWrongAt: number;
 }
+
+/** Pregunta del modo "Kanji · Elige": traducción arriba, cuatro kanjis para escoger. */
+export interface KanjiChoiceQuestion {
+  promptTranslation: string;
+  correctKanji: KanjiEntry;
+  options: KanjiEntry[];
+}
+
+/**
+ * Todas las vistas seleccionables desde el menú principal: los modos que
+ * pasan por QuizPage (kana/kanji/repaso) más el modo independiente
+ * "Kanji · Elige", que tiene su propia página y mecánica.
+ */
+export type AppView = QuizMode | 'review' | 'kanjiChoice';

@@ -3,7 +3,7 @@
     "kanji": "一",
     "pronunciaciones": [
       "ichi",
-      "hito(tsu)"
+      "hito"
     ],
     "traduccionES": "uno",
     "traduccionEn": "one"
@@ -12,7 +12,7 @@
     "kanji": "二",
     "pronunciaciones": [
       "ni",
-      "futa(tsu)"
+      "futa"
     ],
     "traduccionES": "dos",
     "traduccionEn": "two"
@@ -21,7 +21,7 @@
     "kanji": "三",
     "pronunciaciones": [
       "san",
-      "mi(tsu)"
+      "mi"
     ],
     "traduccionES": "tres",
     "traduccionEn": "three"
@@ -31,7 +31,7 @@
     "pronunciaciones": [
       "shi",
       "yon",
-      "yo(tsu)"
+      "yo"
     ],
     "traduccionES": "cuatro",
     "traduccionEn": "four"
@@ -40,7 +40,7 @@
     "kanji": "五",
     "pronunciaciones": [
       "go",
-      "itsu(tsu)"
+      "itsu"
     ],
     "traduccionES": "cinco",
     "traduccionEn": "five"
@@ -49,7 +49,7 @@
     "kanji": "六",
     "pronunciaciones": [
       "roku",
-      "mu(tsu)"
+      "mu"
     ],
     "traduccionES": "seis",
     "traduccionEn": "six"
@@ -58,7 +58,7 @@
     "kanji": "七",
     "pronunciaciones": [
       "shichi",
-      "nana(tsu)"
+      "nana"
     ],
     "traduccionES": "siete",
     "traduccionEn": "seven"
@@ -67,7 +67,7 @@
     "kanji": "八",
     "pronunciaciones": [
       "hachi",
-      "ya(tsu)"
+      "ya"
     ],
     "traduccionES": "ocho",
     "traduccionEn": "eight"
@@ -77,7 +77,7 @@
     "pronunciaciones": [
       "kyuu",
       "ku",
-      "kokono(tsu)"
+      "kokono"
     ],
     "traduccionES": "nueve",
     "traduccionEn": "nine"
