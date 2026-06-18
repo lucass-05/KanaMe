@@ -16,7 +16,7 @@ function getOptionStyle(
   kanji: KanjiEntry,
   question: KanjiChoiceQuestion,
   feedback: ChoiceFeedbackState,
-  accentVar: string,
+  _accentVar: string,
 ): React.CSSProperties {
   if (feedback.status === 'idle') {
     return {
