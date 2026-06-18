@@ -15,7 +15,7 @@ export function HomePage({ onSelectMode, reviewCount }: HomePageProps) {
   return (
     <div className="w-full max-w-3xl mx-auto text-center">
       <p className="font-mono text-xs tracking-[0.2em] uppercase" style={{ color: 'var(--inkan)' }}>
-        習字 — práctica de escritura
+        KanaMe - Aprende japonés!
       </p>
       <h1 className="font-display mt-3 text-4xl sm:text-5xl" style={{ color: 'var(--sumi)' }}>
         Quiz de japonés

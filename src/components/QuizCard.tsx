@@ -94,7 +94,7 @@ export function QuizCard({
             </span>
           )}
           {feedback.status === 'wrong' && (
-            <span className="font-medium" style={{ color: 'var(--inkan)' }}>
+            <span className="stamp-in font-medium" style={{color: 'var(--inkan)' }}>
               Solución: <strong>{feedback.expected}</strong>
             </span>
           )}
